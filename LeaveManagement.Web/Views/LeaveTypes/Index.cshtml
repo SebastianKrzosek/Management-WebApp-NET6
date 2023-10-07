@@ -31,6 +31,8 @@
                 @Html.DisplayFor(modelItem => item.DefaultDays)
             </td>
             <td>
+                    <button data-id="@item.Id" class="btn btn-primaty alocateBtn m-1" type="button">Allocate Leave</button>
+
                     <a class="btn btn-warning m-1" asp-action="Edit" asp-route-id="@item.Id"> <i class="fa-solid fa-pencil"></i> </a>
                     <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
                     <button data-id="@item.Id" class="btn btn-danger  deleteBtn m-1" type="button"><i class="fa-solid fa-trash-can"></i></button>
@@ -41,6 +43,10 @@
 </table>
 
 <form id="confirmDeleteForm" asp-action="Delete">
+    <input type="hidden" id="leaveTypeId" name="Id" />
+</form>
+
+<form id="allocationForm" asp-action="AllocateLeave">
     <input type="hidden" id="leaveTypeId" name="Id" />
 </form>
 
@@ -62,6 +68,23 @@
                         const id = btn.data("id");
                         $("#leaveTypeId").val(id);
                         $("#confirmDeleteForm").submit();
+                    }
+                });
+            });
+            
+            $(".allocateBtn").click(function (e) {
+                swal({
+                    title: "Are you sure?",
+                    text: "Are you sure, you want to allocation this leave to all Employees",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((confirm) => {
+                    if (confirm) {
+                        let btn = $(this);
+                        const id = btn.data("id");
+                        $("#leaveTypeId").val(id);
+                        $("#allocationForm").submit();
                     }
                 });
             });
