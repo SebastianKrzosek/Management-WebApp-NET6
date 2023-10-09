@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.DefaultDays)
             </td>
             <td>
-                    <button data-id="@item.Id" class="btn btn-primaty alocateBtn m-1" type="button">Allocate Leave</button>
+                    <button data-id="@item.Id" class="btn btn-primary allocateBtn m-1" type="button">Allocate Leave</button>
 
                     <a class="btn btn-warning m-1" asp-action="Edit" asp-route-id="@item.Id"> <i class="fa-solid fa-pencil"></i> </a>
                     <a class="btn btn-info m-1" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
@@ -47,7 +47,7 @@
 </form>
 
 <form id="allocationForm" asp-action="AllocateLeave">
-    <input type="hidden" id="leaveTypeId" name="Id" />
+    <input type="hidden" id="leaveTypeIdToAllocation" name="Id" />
 </form>
 
 @section Scripts {
@@ -83,7 +83,7 @@
                     if (confirm) {
                         let btn = $(this);
                         const id = btn.data("id");
-                        $("#leaveTypeId").val(id);
+                        $("#leaveTypeIdToAllocation").val(id);
                         $("#allocationForm").submit();
                     }
                 });

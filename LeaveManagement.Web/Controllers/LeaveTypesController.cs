@@ -21,17 +21,18 @@ namespace LeaveManagement.Web.Controllers
 
         private readonly ILeaveTypeRepository leaveTypeRepository;
         private readonly IMapper mapper;
+        private readonly ILeaveAllocationRepository leaveAllocationRepository;
 
-        public LeaveTypesController(ILeaveTypeRepository LeaveTypeRepository, IMapper mapper)
+        public LeaveTypesController(ILeaveTypeRepository LeaveTypeRepository, IMapper mapper, ILeaveAllocationRepository leaveAllocationRepository)
         {
             leaveTypeRepository = LeaveTypeRepository;
             this.mapper = mapper;
+            this.leaveAllocationRepository = leaveAllocationRepository;
         }
 
         // GET: LeaveTypes
         public async Task<IActionResult> Index()
         {
-            //if (LeaveType.LeaveTypes == null) { return Problem("Entity set 'ApplicationDbContext.LeaveTypes'  is null."); }
             var leaveTypes = mapper.Map<List<LeaveTypeVM>>(await leaveTypeRepository.GetAllAsync());
 
             return View(leaveTypes);
@@ -135,9 +136,10 @@ namespace LeaveManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AllocateLeave(int id)
+        public async Task<IActionResult> AllocateLeave(int Id)
         {
-            throw new NotImplementedException();
+            await leaveAllocationRepository.LeaveAllocation(Id);
+            return RedirectToAction(nameof(Index));
         } 
     }
 }
