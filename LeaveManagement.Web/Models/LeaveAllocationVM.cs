@@ -1,11 +1,20 @@
-﻿namespace LeaveManagement.Web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LeaveManagement.Web.Models
 {
     public class LeaveAllocationVM
     {
-        public int Id {  get; set; }    
-        public int NumbersOfDays { get; set; }
+        [Required]
+        public int Id {  get; set; }
+        [Display(Name = "Numbers Of Days")]
+        [Range(1, 50, ErrorMessage = "Invalid Number Entered")]
+        [Required]
+        public int NumberOfDays { get; set; }
+        [Display(Name = "Allocation Peroid")]
+        
+        [Required]
         public int Peroid { get; set; }
-        public LeaveTypeVM LeaveType { get; set; }  
+        public LeaveTypeVM? LeaveType { get; set; }  
 
     }
 }
