@@ -21,7 +21,7 @@ namespace LeaveManagement.Web.Repositories
 
         public async Task CreateLeaveRequest(LeaveRequestCreateVM request)
         {
-            var user =await userManager.GetUserAsync(httpContextAccessor.HttpContext?.User);
+            var user = await userManager.GetUserAsync(httpContextAccessor?.HttpContext?.User);
             var leaveRequest = mapper.Map<LeaveRequest>(request);
             leaveRequest.DateModified = DateTime.Now;
             leaveRequest.RequstingEmployeeId = user.Id;

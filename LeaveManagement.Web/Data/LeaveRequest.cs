@@ -10,7 +10,7 @@ namespace LeaveManagement.Web.Data
         public LeaveType LeaveType { get; set; }
         public int LeaveTypeId { get; set; }
         public DateTime LeaveRequested { get; set; }
-        public string RequsetComment { get; set; }
+        public string? RequsetComment { get; set; }
         public bool? Approved { get; set; }
         public bool Canceled { get; set; }
         public string RequstingEmployeeId { get; set; }
