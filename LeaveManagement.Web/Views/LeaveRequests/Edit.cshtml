@@ -1,0 +1,76 @@
+﻿@model LeaveManagement.Web.Data.LeaveRequest
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>LeaveRequest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveTypeId" class="control-label"></label>
+                <select asp-for="LeaveTypeId" class="form-control" asp-items="ViewBag.LeaveTypeId"></select>
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LeaveRequested" class="control-label"></label>
+                <input asp-for="LeaveRequested" class="form-control" />
+                <span asp-validation-for="LeaveRequested" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequsetComment" class="control-label"></label>
+                <input asp-for="RequsetComment" class="form-control" />
+                <span asp-validation-for="RequsetComment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Approved" class="control-label"></label>
+                <input asp-for="Approved" class="form-control" />
+                <span asp-validation-for="Approved" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Canceled" /> @Html.DisplayNameFor(model => model.Canceled)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequstingEmployeeId" class="control-label"></label>
+                <input asp-for="RequstingEmployeeId" class="form-control" />
+                <span asp-validation-for="RequstingEmployeeId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="DateCreate" class="control-label"></label>
+                <input asp-for="DateCreate" class="form-control" />
+                <span asp-validation-for="DateCreate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateModified" class="control-label"></label>
+                <input asp-for="DateModified" class="form-control" />
+                <span asp-validation-for="DateModified" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
