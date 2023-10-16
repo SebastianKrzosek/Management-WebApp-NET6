@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using LeaveManagement.Web.Data;
 using LeaveManagement.Web.Models;
+using LeaveManagement.Web.Data;
 
 namespace LeaveManagement.Web.Configuration
 {
@@ -14,6 +14,7 @@ namespace LeaveManagement.Web.Configuration
             CreateMap<LeaveAllocation, LeaveAllocationVM>().ReverseMap();
             CreateMap<LeaveAllocation, LeaveAllocationEditVM>().ReverseMap();
             CreateMap<LeaveRequest, LeaveRequestCreateVM>().ReverseMap();
+            CreateMap<LeaveRequest, LeaveRequestVM>().ReverseMap();
 
         }
     }

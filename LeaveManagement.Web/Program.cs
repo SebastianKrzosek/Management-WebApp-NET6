@@ -1,3 +1,5 @@
+using LeaveManagement.Application.Contracts;
+using LeaveManagement.Application.Repositories;
 using LeaveManagement.Web.Configuration;
 using LeaveManagement.Web.Contracts;
 using LeaveManagement.Web.Data;

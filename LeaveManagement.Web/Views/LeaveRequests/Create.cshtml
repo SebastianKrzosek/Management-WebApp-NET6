@@ -1,49 +1,51 @@
 ﻿@model LeaveRequestCreateVM
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Apply For Leave";
 }
 
-<h1>Create</h1>
+<h1>Apply For Leave</h1>
 
-<h4>LeaveRequest</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mt-3">
+            <div class="form-group">
                 <label asp-for="LeaveTypeId" class="control-label"></label>
-                <select asp-for="LeaveTypeId" class="form-select" asp-items="Model?.LeaveTypes">
+                <select asp-for="LeaveTypeId" asp-items="Model?.LeaveTypes" class="form-select">
                     <option>Select Leave Type</option>
                 </select>
                 <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
             </div>
-            <div class="row mt-3">
-                <div class="form-group col-md-6">
-                    <label asp-for="StartDate" class="control-label"></label>
-                    <input asp-for="StartDate" class="form-control" type="date" data-date-format="yyyy-MM-dd" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
+            <br />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control datepicker" type="date" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
                 </div>
-
-                    <div class="form-group col-md-6">
-                    <label asp-for="EndDate" class="control-label"></label>
-                    <input asp-for="EndDate" class="form-control " type="date" data-date-format="yyyy-MM-dd" placeholder="RRRR-MM-DD" pattern="\d{4}-\d{2}-\d{2}" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control datepicker" type="date" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
                 </div>
             </div>
-
-            <div class="form-group mt-3">
+            <br />
+            <div class="form-group">
                 <label asp-for="RequestComment" class="control-label"></label>
                 <textarea asp-for="RequestComment" class="form-control"></textarea>
                 <span asp-validation-for="RequestComment" class="text-danger"></span>
             </div>
-            <div class="form-group mt-5">
-                <a class="btn btn-dark" asp-action="Index">Back to List</a>
+            <br />
+            <div class="form-group">
+                <a class="btn btn-dark" asp-action="MyLeave">Cancel</a>
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-

@@ -11,6 +11,8 @@ using AutoMapper;
 using LeaveManagement.Web.Contracts;
 using LeaveManagement.Web.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using LeaveManagement.Application.Contracts;
+using LeaveManagement.Web.Constants;
 
 namespace LeaveManagement.Web.Controllers
 {
@@ -19,20 +21,29 @@ namespace LeaveManagement.Web.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILeaveRequestRepository leaveRequestRepository;
+        private readonly ILeaveTypeRepository leaveTypeRepository;
 
-        public LeaveRequestsController(ApplicationDbContext context, ILeaveRequestRepository leaveRequestRepository)
+        public LeaveRequestsController(ApplicationDbContext context, ILeaveRequestRepository leaveRequestRepository, ILeaveTypeRepository leaveTypeRepository)
         {
             _context = context;
             this.leaveRequestRepository = leaveRequestRepository;
+            this.leaveTypeRepository = leaveTypeRepository;
         }
-
+        
         // GET: LeaveRequests
+        [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.LeaveRequests.Include(l => l.LeaveType);
-            return View(await applicationDbContext.ToListAsync());
+            var model = await leaveRequestRepository.GetAdminLeaveRequestList();
+            return View(model);
         }
 
+        public async Task<IActionResult> MyLeave()
+        {
+            var model = await leaveRequestRepository.GetMyLeaveDetails();
+            return View(model);
+        }
+        
         // GET: LeaveRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -53,11 +64,13 @@ namespace LeaveManagement.Web.Controllers
         }
 
         // GET: LeaveRequests/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
-            var model = new LeaveRequestCreateVM {
-                LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name"),
+            var model = new LeaveRequestCreateVM
+            {
+                LeaveTypes = new SelectList(await leaveTypeRepository.GetAllAsync(), "Id", "Name")
             };
+
             return View(model);
         }
 
@@ -68,20 +81,25 @@ namespace LeaveManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LeaveRequestCreateVM model)
         {
-            try { 
+            try
+            {
                 if (ModelState.IsValid)
                 {
-                    await leaveRequestRepository.CreateLeaveRequest(model);
-                    return RedirectToAction(nameof(Index));
+                    var isValidRequest = await leaveRequestRepository.CreateLeaveRequest(model);
+                    if (isValidRequest)
+                    {
+                        return RedirectToAction(nameof(MyLeave));
+                    }
+                    ModelState.AddModelError(string.Empty, "You have exceeded your allocation with this request.");
                 }
-            }catch(Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, "An Error Has Occurred, Please Try Again Later!");
-
             }
-            model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name", model.LeaveTypeId);
-            return View(model);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "An Error Has Occurred. Please Try Again Later");
+            }
 
+            model.LeaveTypes = new SelectList(await leaveTypeRepository.GetAllAsync(), "Id", "Name", model.LeaveTypeId);
+            return View(model);
         }
 
         // GET: LeaveRequests/Edit/5
