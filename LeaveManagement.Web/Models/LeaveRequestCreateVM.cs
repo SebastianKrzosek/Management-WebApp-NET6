@@ -18,13 +18,13 @@ namespace LeaveManagement.Web.Models
         public int LeaveTypeId { get; set; }
         public SelectList? LeaveTypes { get; set; }
         [Display(Name = "Request Comment")]
-        public string? RequestComment { get; set; }
+        public string? RequestComments { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (StartDate > EndDate) yield return new ValidationResult("The Start Date Must Be Before End Date", new[] { nameof(StartDate), nameof(EndDate) });
 
-            if(RequestComment?.Length > 250) yield return new ValidationResult("Too Long Comments", new[] { nameof(RequestComment) });
+            if(RequestComments?.Length > 250) yield return new ValidationResult("Too Long Comments", new[] { nameof(RequestComments) });
         }
     }
 }

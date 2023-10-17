@@ -1,5 +1,4 @@
-﻿using LeaveManagement.Web.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LeaveManagement.Web.Models
 {
@@ -14,7 +13,6 @@ namespace LeaveManagement.Web.Models
 
         [Display(Name = "Leave Type")]
         public LeaveTypeVM LeaveType { get; set; }
-
         public bool? Approved { get; set; }
         public bool Cancelled { get; set; }
 

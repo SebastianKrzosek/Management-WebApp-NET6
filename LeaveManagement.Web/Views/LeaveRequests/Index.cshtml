@@ -118,7 +118,7 @@
                 }
             </td>
             <td>
-                    @if (item.Cancelled)
+                    @if (!item.Cancelled)
                     {
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Review</a>
 
