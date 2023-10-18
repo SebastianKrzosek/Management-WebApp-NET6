@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using LeaveManagement.Application.Contracts;
+using LeaveManagement.Web.Constants;
+using LeaveManagement.Web.Contracts;
+using LeaveManagement.Web.Data;
+using LeaveManagement.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using LeaveManagement.Web.Data;
-using LeaveManagement.Web.Models;
-using AutoMapper;
-using LeaveManagement.Web.Contracts;
-using LeaveManagement.Web.Repositories;
-using Microsoft.AspNetCore.Authorization;
-using LeaveManagement.Application.Contracts;
-using LeaveManagement.Web.Constants;
 
 namespace LeaveManagement.Web.Controllers
 {
@@ -29,7 +23,7 @@ namespace LeaveManagement.Web.Controllers
             this.leaveRequestRepository = leaveRequestRepository;
             this.leaveTypeRepository = leaveTypeRepository;
         }
-        
+
         // GET: LeaveRequests
         [Authorize(Roles = Roles.Administrator)]
         public async Task<IActionResult> Index()
@@ -37,18 +31,18 @@ namespace LeaveManagement.Web.Controllers
             var model = await leaveRequestRepository.GetAdminLeaveRequestList();
             return View(model);
         }
-        
+
         public async Task<IActionResult> MyLeave()
         {
             var model = await leaveRequestRepository.GetMyLeaveDetails();
             return View(model);
         }
-        
+
         // GET: LeaveRequests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             var model = await leaveRequestRepository.GetLeaveRequestAsync(id);
-            if(model == null)
+            if (model == null)
             {
                 return NotFound();
             }
@@ -77,7 +71,7 @@ namespace LeaveManagement.Web.Controllers
             {
                 await leaveRequestRepository.ChangeApprovalStatus(Id, approved);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -225,7 +219,7 @@ namespace LeaveManagement.Web.Controllers
             {
                 _context.LeaveRequests.Remove(leaveRequest);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -233,7 +227,7 @@ namespace LeaveManagement.Web.Controllers
 
         private bool LeaveRequestExists(int id)
         {
-          return (_context.LeaveRequests?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.LeaveRequests?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
