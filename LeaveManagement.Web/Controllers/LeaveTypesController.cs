@@ -92,16 +92,18 @@ namespace LeaveManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, LeaveTypeVM leaveTypeVM)
         {
-            if (id != leaveTypeVM.Id)
-            {
-                return NotFound();
-            }
+            if (id != leaveTypeVM.Id) return NotFound();
+
+            var leaveType = await leaveTypeRepository.GetAsync(id);
+
+            if (leaveType == null) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var leaveType = mapper.Map<LeaveType>(leaveTypeVM);
+
+                    mapper.Map(leaveTypeVM, leaveType);
                     await leaveTypeRepository.UpdateAsync(leaveType);
                 }
                 catch (DbUpdateConcurrencyException)
