@@ -1,8 +1,7 @@
 ﻿using LeaveManagement.Application.Contracts;
-using LeaveManagement.Web.Constants;
-using LeaveManagement.Web.Contracts;
-using LeaveManagement.Web.Data;
-using LeaveManagement.Web.Models;
+using LeaveManagement.Common.Constants;
+using LeaveManagement.Data;
+using LeaveManagement.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,8 +17,8 @@ namespace LeaveManagement.Web.Controllers
         private readonly ILeaveTypeRepository leaveTypeRepository;
         private readonly ILogger<LeaveRequestsController> logger;
 
-        public LeaveRequestsController(ApplicationDbContext context, 
-            ILeaveRequestRepository leaveRequestRepository, 
+        public LeaveRequestsController(ApplicationDbContext context,
+            ILeaveRequestRepository leaveRequestRepository,
             ILeaveTypeRepository leaveTypeRepository,
             ILogger<LeaveRequestsController> logger)
         {
